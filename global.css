@@ -34,8 +34,58 @@ height: 100%;
 pointer-events: none;
 }
 
+/* Move color variables to a common rule so they apply to both circles and legend */
+:root {
+  --color-departures: steelblue;
+  --color-arrivals: darkorange;
+}
+
+/* Update circle styles to use root variables */
+circle, .legend > div {
+  --color: color-mix(
+    in oklch,
+    var(--color-departures) calc(100% * var(--departure-ratio)),
+    var(--color-arrivals)
+  );
+}
+
 circle {
-    pointer-events: auto;
+  pointer-events: auto;
+  fill: var(--color);
+}
+
+/* Updated Legend styles for single row */
+.legend {
+  margin: 20px auto;
+  background: white;
+  padding: 12px 24px;
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 24px;
+  font-size: 14px;
+  width: fit-content;
+}
+
+.legend-label {
+  font-weight: 500;
+}
+
+.legend > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend > div::before {
+  content: "";
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--color);
+  display: inline-block;
 }
 
 /* Add these new styles */
